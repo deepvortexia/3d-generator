@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
+import Replicate from 'replicate'
 
 const supabase = createClient(
   process.env.SUPABASE_URL || '',
@@ -27,6 +28,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const apiKey = process.env.REPLICATE_API_TOKEN
+  console.log('[generate3d] REPLICATE_API_TOKEN present:', !!apiKey, 'length:', apiKey?.length)
   if (!apiKey) {
     return res.status(500).json({ error: 'Replicate API key not configured' })
   }
@@ -85,62 +87,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const imageDataUrl = `data:${mimeType || 'image/jpeg'};base64,${imageBase64}`
 
-    const response = await fetch('https://api.replicate.com/v1/predictions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Token ${apiKey}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'wait',
-      },
-      body: JSON.stringify({
-        version: 'e8f6c45206993f297372f5436b90350817bd9b4a0d52d2a76df50c1c8afa2b3c',
-        input: {
-          images: [imageDataUrl],
-        },
-      }),
-    })
+    const replicate = new Replicate({ auth: apiKey })
 
-    const prediction = await response.json()
-    console.log('[generate3d] Replicate response:', { status: response.status, ok: response.ok })
-
-    if (!response.ok) {
-      generationFailed = true
-      throw new Error(prediction.detail || 'Failed to create prediction')
-    }
-
-    // Poll for completion
-    let result = prediction
-    const pollStartTime = Date.now()
-
-    while (result.status !== 'succeeded' && result.status !== 'failed') {
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
-      const pollResponse = await fetch(
-        `https://api.replicate.com/v1/predictions/${result.id}`,
-        { headers: { 'Authorization': `Token ${apiKey}` } }
-      )
-
-      if (!pollResponse.ok) {
-        generationFailed = true
-        throw new Error(`Failed to poll prediction status: ${pollResponse.status}`)
-      }
-
-      result = await pollResponse.json()
-      console.log('[generate3d] Poll result:', { status: result.status, id: result.id })
-
-      if (Date.now() - pollStartTime > 100000) {
-        generationFailed = true
-        throw new Error('Processing timeout')
-      }
-    }
-
-    if (result.status === 'failed') {
-      generationFailed = true
-      throw new Error(result.error || '3D generation failed')
-    }
-
-    // Parse output — Trellis returns { video: url, mesh: url } or array [video, glb]
-    const output = result.output
+    console.log('[generate3d] Calling replicate.run()...')
+    const output = await replicate.run(
+      'firtoz/trellis:e8f6c45206993f297372f5436b90350817bd9b4a0d52d2a76df50c1c8afa2b3c',
+      { input: { images: [imageDataUrl] } }
+    )
+    console.log('[generate3d] Full output:', JSON.stringify(output))
     let rawVideoUrl: string | null = null
     let rawGlbUrl: string | null = null
 
