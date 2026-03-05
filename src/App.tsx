@@ -242,27 +242,21 @@ function AppContent() {
     finally { setFavSaving(false) }
   }
 
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-
   const downloadGlb = async () => {
     if (!resultGlb || downloading) return
     setDownloading(true)
     try {
-      if (isMobile) {
-        window.open(resultGlb, '_blank')
-      } else {
-        const response = await fetch(resultGlb)
-        if (!response.ok) throw new Error(`HTTP ${response.status}`)
-        const blob = await response.blob()
-        const url = URL.createObjectURL(blob)
-        const link = document.createElement('a')
-        link.href = url
-        link.download = `3d-model-${Date.now()}.glb`
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        URL.revokeObjectURL(url)
-      }
+      const response = await fetch(resultGlb)
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `3d-model-${Date.now()}.glb`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
     } catch {
       setToast({ title: 'Download failed', message: 'Could not download GLB file. Try right-clicking and "Save Link As...".', type: 'error' })
     } finally {
@@ -270,12 +264,23 @@ function AppContent() {
     }
   }
 
-  const downloadVideo = () => {
+  const downloadVideo = async () => {
     if (!resultVideo) return
-    const a = document.createElement('a')
-    a.href = resultVideo
-    a.download = `3d-preview-${Date.now()}.mp4`
-    a.click()
+    try {
+      const response = await fetch(resultVideo)
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `3d-preview-${Date.now()}.mp4`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+    } catch {
+      setToast({ title: 'Download failed', message: 'Could not download video. Try right-clicking and "Save Video As...".', type: 'error' })
+    }
   }
 
   const resetAll = () => {
@@ -399,11 +404,6 @@ function AppContent() {
               </button>
               <button onClick={resetAll} className="action-btn regenerate-btn"><span>🔄</span> New Model</button>
             </div>
-            {isMobile && resultGlb && (
-              <p style={{ fontSize: '0.75rem', color: 'var(--text-muted, #888)', margin: '0.5rem 0 0', textAlign: 'center' }}>
-                Mobile: GLB will open in new tab, long-press to save
-              </p>
-            )}
           </div>
         )}
       </div>

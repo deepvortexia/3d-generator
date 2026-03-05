@@ -53,11 +53,22 @@ export function Gallery({ refreshKey }: GalleryProps) {
     } catch {}
   }
 
-  const handleDownloadGlb = (glbUrl: string, id: string) => {
-    const a = document.createElement('a')
-    a.href = glbUrl
-    a.download = `3d-model-${id.slice(0, 8)}.glb`
-    a.click()
+  const handleDownloadGlb = async (glbUrl: string, id: string) => {
+    try {
+      const response = await fetch(glbUrl)
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `3d-model-${id.slice(0, 8)}.glb`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+    } catch {
+      alert('Download failed. Please try right-clicking and "Save Link As..."')
+    }
   }
 
   if (!token || (favorites.length === 0 && !loading)) return null
