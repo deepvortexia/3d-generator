@@ -20,7 +20,7 @@ export function AuthCallback() {
             const errorParam = url.searchParams.get('error')
             const errorDescription = url.searchParams.get('error_description')
 
-            console.log('[Emoticon AuthCallback] URL params:', { code: code ? 'present' : 'missing', errorParam })
+            console.log('[3D AuthCallback] URL params:', { code: code ? 'present' : 'missing', errorParam })
 
             if (errorParam) {
                 setError(errorDescription || errorParam)
@@ -29,18 +29,18 @@ export function AuthCallback() {
 
             // PKCE flow: exchange code for session
             if (code) {
-                console.log('[Emoticon AuthCallback] Exchanging code for session...')
+                console.log('[3D AuthCallback] Exchanging code for session...')
 
                 const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
 
                 if (exchangeError) {
-                    console.error('[Emoticon AuthCallback] Exchange error:', exchangeError)
+                    console.error('[3D AuthCallback] Exchange error:', exchangeError)
 
                     // If code verifier was lost, check if detectSessionInUrl already handled it
                     if (exchangeError.message.includes('code verifier')) {
                         const { data: sessionData } = await supabase.auth.getSession()
                         if (sessionData?.session) {
-                            console.log('[Emoticon AuthCallback] Session already established via detectSessionInUrl')
+                            console.log('[3D AuthCallback] Session already established via detectSessionInUrl')
                             window.location.href = getReturnOrigin()
                             return
                         }
@@ -53,7 +53,7 @@ export function AuthCallback() {
                     return
                 }
 
-                console.log('[Emoticon AuthCallback] Session established:', data.session ? 'success' : 'no session')
+                console.log('[3D AuthCallback] Session established:', data.session ? 'success' : 'no session')
                 window.location.href = getReturnOrigin()
                 return
             }
@@ -61,17 +61,17 @@ export function AuthCallback() {
             // Implicit flow fallback: check hash for access_token
             const hash = window.location.hash
             if (hash && hash.includes('access_token')) {
-                console.log('[Emoticon AuthCallback] Found access_token in hash, getting session...')
+                console.log('[3D AuthCallback] Found access_token in hash, getting session...')
                 await supabase.auth.getSession()
                 window.location.href = getReturnOrigin()
                 return
             }
 
             // Fallback: wait for auth state change then redirect
-            console.log('[Emoticon AuthCallback] No code or token found, waiting for auth state change...')
+            console.log('[3D AuthCallback] No code or token found, waiting for auth state change...')
             const { data: { subscription } } = supabase.auth.onAuthStateChange(
                 (event, session) => {
-                    console.log('[Emoticon AuthCallback] Auth state change:', event)
+                    console.log('[3D AuthCallback] Auth state change:', event)
                     if (event === 'SIGNED_IN' && session) {
                         subscription.unsubscribe()
                         window.location.href = getReturnOrigin()
@@ -82,7 +82,7 @@ export function AuthCallback() {
             // Safety timeout
             setTimeout(() => {
                 subscription.unsubscribe()
-                console.log('[Emoticon AuthCallback] Timeout reached, redirecting to home')
+                console.log('[3D AuthCallback] Timeout reached, redirecting to home')
                 window.location.href = getReturnOrigin()
             }, 5000)
         }
