@@ -85,43 +85,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   let generationFailed = false
 
   try {
-    const imageDataUrl = `data:${mimeType || 'image/jpeg'};base64,${imageBase64}`
+    const timestamp = Date.now()
+    const imgMime = mimeType || 'image/jpeg'
+    const imgExt = imgMime.includes('png') ? 'png' : imgMime.includes('webp') ? 'webp' : 'jpg'
 
+    // Step 1: Upload input image to Supabase Storage to get a public URL for Replicate
+    console.log('[generate3d] Uploading input image to Supabase...')
+    const imgBuffer = Buffer.from(imageBase64, 'base64')
+    const inputFileName = `${userId}/${timestamp}-input.${imgExt}`
+    const { error: inputUploadError } = await supabase.storage
+      .from('generated-images')
+      .upload(inputFileName, imgBuffer, { contentType: imgMime, upsert: false })
+    if (inputUploadError) throw new Error(`Input image upload failed: ${inputUploadError.message}`)
+    const { data: { publicUrl: inputImageUrl } } = supabase.storage
+      .from('generated-images')
+      .getPublicUrl(inputFileName)
+    console.log('[generate3d] Input image public URL:', inputImageUrl)
+
+    // Step 2: Call Trellis with the public URL
     const replicate = new Replicate({ auth: apiKey })
-
     console.log('[generate3d] Token prefix:', apiKey.slice(0, 8))
-    console.log('[generate3d] Image data URL length:', imageDataUrl.length)
-    console.log('[generate3d] Image data URL prefix:', imageDataUrl.slice(0, 50))
     console.log('[generate3d] Calling replicate.run() — this can take 3-5 minutes...')
-    const output = await replicate.run(
+    const output: any = await replicate.run(
       'firtoz/trellis:e8f6c45206993f297372f5436b90350817bd9b4a0d52d2a76df50c1c8afa2b3c',
-      { input: { images: [imageDataUrl] } }
+      { input: { images: [inputImageUrl] } }
     )
     console.log('[generate3d] Full output:', JSON.stringify(output))
-    let rawVideoUrl: string | null = null
-    let rawGlbUrl: string | null = null
 
-    if (Array.isArray(output)) {
-      for (const url of output) {
-        if (typeof url === 'string') {
-          if (url.includes('.mp4') || url.includes('video')) rawVideoUrl = url
-          else if (url.includes('.glb') || url.includes('mesh') || url.includes('3d')) rawGlbUrl = url
-        }
-      }
-      // Fallback: first = video, second = glb
-      if (!rawVideoUrl && output[0]) rawVideoUrl = output[0]
-      if (!rawGlbUrl && output[1]) rawGlbUrl = output[1]
-    } else if (output && typeof output === 'object') {
-      rawVideoUrl = output.video || output.video_file || null
-      rawGlbUrl = output.mesh || output.model_file || output.glb || null
-    }
+    // Step 3: Parse output — Trellis returns { color_video, combined_video, gaussian_ply, model_file }
+    const rawVideoUrl: string | null = output?.combined_video || output?.color_video || null
+    const rawGlbUrl: string | null = output?.model_file || output?.gaussian_ply || null
 
     if (!rawVideoUrl && !rawGlbUrl) {
       generationFailed = true
       throw new Error('No output returned from model')
     }
-
-    const timestamp = Date.now()
 
     // Upload video to Supabase Storage
     let videoUrl: string | null = null
