@@ -89,7 +89,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const replicate = new Replicate({ auth: apiKey })
 
-    console.log('[generate3d] Calling replicate.run()...')
+    console.log('[generate3d] Token prefix:', apiKey.slice(0, 8))
+    console.log('[generate3d] Image data URL length:', imageDataUrl.length)
+    console.log('[generate3d] Image data URL prefix:', imageDataUrl.slice(0, 50))
+    console.log('[generate3d] Calling replicate.run() — this can take 3-5 minutes...')
     const output = await replicate.run(
       'firtoz/trellis:e8f6c45206993f297372f5436b90350817bd9b4a0d52d2a76df50c1c8afa2b3c',
       { input: { images: [imageDataUrl] } }
