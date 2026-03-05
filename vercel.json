@@ -1,0 +1,14 @@
+{
+  "functions": {
+    "api/generate3d.ts": {
+      "maxDuration": 120
+    }
+  },
+  "headers": [
+    { "source": "/sitemap.xml", "headers": [{ "key": "Content-Type", "value": "application/xml" }] },
+    { "source": "/robots.txt", "headers": [{ "key": "Content-Type", "value": "text/plain" }] }
+  ],
+  "rewrites": [
+    { "source": "/((?!api/|sitemap\\.xml|robots\\.txt).*)", "destination": "/index.html" }
+  ]
+}
