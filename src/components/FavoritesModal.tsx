@@ -55,10 +55,21 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
   }
 
   const handleDownloadGlb = async (glbUrl: string, id: string) => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
     try {
       const response = await fetch(glbUrl)
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
       const blob = await response.blob()
+      if (isMobile) {
+        const filename = `3d-model-${id.slice(0, 8)}.glb`
+        const file = new File([blob], filename, { type: blob.type })
+        if (navigator.canShare?.({ files: [file] })) {
+          await navigator.share({ files: [file] })
+          return
+        }
+        window.open(glbUrl, '_blank')
+        return
+      }
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url

@@ -242,6 +242,8 @@ function AppContent() {
     finally { setFavSaving(false) }
   }
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
   const downloadGlb = async () => {
     if (!resultGlb || downloading) return
     setDownloading(true)
@@ -249,14 +251,24 @@ function AppContent() {
       const response = await fetch(resultGlb)
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
       const blob = await response.blob()
-      const url = URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `3d-model-${Date.now()}.glb`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      URL.revokeObjectURL(url)
+      if (isMobile) {
+        const filename = `3d-model-${Date.now()}.glb`
+        const file = new File([blob], filename, { type: blob.type })
+        if (navigator.canShare?.({ files: [file] })) {
+          await navigator.share({ files: [file] })
+        } else {
+          window.open(resultGlb, '_blank')
+        }
+      } else {
+        const url = URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = url
+        link.download = `3d-model-${Date.now()}.glb`
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
+      }
     } catch {
       setToast({ title: 'Download failed', message: 'Could not download GLB file. Try right-clicking and "Save Link As...".', type: 'error' })
     } finally {
@@ -270,14 +282,24 @@ function AppContent() {
       const response = await fetch(resultVideo)
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
       const blob = await response.blob()
-      const url = URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `3d-preview-${Date.now()}.mp4`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      URL.revokeObjectURL(url)
+      if (isMobile) {
+        const filename = `3d-preview-${Date.now()}.mp4`
+        const file = new File([blob], filename, { type: blob.type })
+        if (navigator.canShare?.({ files: [file] })) {
+          await navigator.share({ files: [file] })
+        } else {
+          window.open(resultVideo, '_blank')
+        }
+      } else {
+        const url = URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = url
+        link.download = `3d-preview-${Date.now()}.mp4`
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
+      }
     } catch {
       setToast({ title: 'Download failed', message: 'Could not download video. Try right-clicking and "Save Video As...".', type: 'error' })
     }
