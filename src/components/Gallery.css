@@ -1,8 +1,51 @@
-/* Inline favorites section */
-.favorites-section {
+/* Favorites wrapper */
+.favorites-wrapper {
   max-width: 900px;
   margin: 2rem auto;
   padding: 0 1rem;
+}
+
+.favorites-btn-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+/* Gold pill Favorites toggle button */
+.gallery-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.75rem;
+  background: linear-gradient(135deg, #1a1208, #1e1810);
+  border: 1.5px solid #F5A623;
+  border-radius: 50px;
+  color: #F5A623;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 14px rgba(245, 166, 35, 0.25);
+  letter-spacing: 0.02em;
+  min-width: 160px;
+}
+
+.gallery-toggle:hover {
+  box-shadow: 0 0 22px rgba(245, 166, 35, 0.5);
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #221a0c, #2a2010);
+}
+
+.gallery-toggle-active {
+  background: linear-gradient(135deg, #F5A623, #e8941a) !important;
+  color: #0a0a0a !important;
+  box-shadow: 0 0 24px rgba(245, 166, 35, 0.6) !important;
+}
+
+/* Inline favorites section */
+.favorites-section {
+  padding: 0;
 }
 
 .favorites-heading {
@@ -16,31 +59,6 @@
   color: var(--text-secondary);
   font-size: 0.95rem;
   padding: 1rem 0;
-}
-
-.gallery-toggle {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  padding: 10px 20px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  color: var(--text-primary);
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.gallery-toggle:hover {
-  background: var(--bg-tertiary);
-  border-color: var(--gold-primary);
-  box-shadow: 0 0 20px var(--glow-gold);
 }
 
 .gallery-modal {
@@ -425,10 +443,9 @@
 
 @media (max-width: 768px) {
   .gallery-toggle {
-    top: 80px;
-    left: 15px;
-    padding: 8px 16px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    padding: 0.6rem 1.4rem;
+    min-width: 140px;
   }
 
   .gallery-content {
