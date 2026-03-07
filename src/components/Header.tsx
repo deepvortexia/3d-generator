@@ -74,7 +74,7 @@ export default function Header() {
           ) : (
             <button className="hub-pill credits-pill" style={{ cursor: 'pointer' }} onClick={() => setShowAuthModal(true)}>
               <span className="pill-icon">🏆</span>
-              <span className="pill-text">Sign in - Get Free Credits</span>
+              <span className="pill-text">Sign in - Get 2 Free Credits</span>
             </button>
           )}
 
