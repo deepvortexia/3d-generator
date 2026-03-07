@@ -125,44 +125,36 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     let videoUrl: string | null = null
     if (rawVideoUrl) {
       const videoRes = await fetch(rawVideoUrl)
-      if (videoRes.ok) {
-        const videoBuffer = await videoRes.arrayBuffer()
-        const videoFileName = `${userId}/${timestamp}-preview.mp4`
-        const { error: videoUploadError } = await supabase.storage
-          .from('generated-images')
-          .upload(videoFileName, videoBuffer, { contentType: 'video/mp4', upsert: false })
-        if (!videoUploadError) {
-          const { data: { publicUrl } } = supabase.storage
-            .from('generated-images')
-            .getPublicUrl(videoFileName)
-          videoUrl = publicUrl
-        } else {
-          console.error('[generate3d] Video upload failed:', videoUploadError)
-          videoUrl = rawVideoUrl
-        }
-      }
+      if (!videoRes.ok) throw new Error(`Failed to fetch Replicate video output: ${videoRes.status}`)
+      const videoBuffer = await videoRes.arrayBuffer()
+      const videoFileName = `${userId}/${timestamp}-preview.mp4`
+      const { error: videoUploadError } = await supabase.storage
+        .from('generated-images')
+        .upload(videoFileName, videoBuffer, { contentType: 'video/mp4', upsert: false })
+      if (videoUploadError) throw new Error(`Video storage upload failed: ${videoUploadError.message}`)
+      const { data: { publicUrl: videoPublicUrl } } = supabase.storage
+        .from('generated-images')
+        .getPublicUrl(videoFileName)
+      if (!videoPublicUrl) throw new Error('Failed to get public URL for video after upload')
+      videoUrl = videoPublicUrl
     }
 
     // Upload GLB to Supabase Storage
     let glbUrl: string | null = null
     if (rawGlbUrl) {
       const glbRes = await fetch(rawGlbUrl)
-      if (glbRes.ok) {
-        const glbBuffer = await glbRes.arrayBuffer()
-        const glbFileName = `${userId}/${timestamp}-model.glb`
-        const { error: glbUploadError } = await supabase.storage
-          .from('generated-images')
-          .upload(glbFileName, glbBuffer, { contentType: 'model/gltf-binary', upsert: false })
-        if (!glbUploadError) {
-          const { data: { publicUrl } } = supabase.storage
-            .from('generated-images')
-            .getPublicUrl(glbFileName)
-          glbUrl = publicUrl
-        } else {
-          console.error('[generate3d] GLB upload failed:', glbUploadError)
-          glbUrl = rawGlbUrl
-        }
-      }
+      if (!glbRes.ok) throw new Error(`Failed to fetch Replicate GLB output: ${glbRes.status}`)
+      const glbBuffer = await glbRes.arrayBuffer()
+      const glbFileName = `${userId}/${timestamp}-model.glb`
+      const { error: glbUploadError } = await supabase.storage
+        .from('generated-images')
+        .upload(glbFileName, glbBuffer, { contentType: 'model/gltf-binary', upsert: false })
+      if (glbUploadError) throw new Error(`GLB storage upload failed: ${glbUploadError.message}`)
+      const { data: { publicUrl: glbPublicUrl } } = supabase.storage
+        .from('generated-images')
+        .getPublicUrl(glbFileName)
+      if (!glbPublicUrl) throw new Error('Failed to get public URL for GLB after upload')
+      glbUrl = glbPublicUrl
     }
 
     // Log transaction
