@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, ReactNode, useCallback,
 import { User, Session, AuthError } from '@supabase/supabase-js'
 import { supabase, Profile } from '../lib/supabase'
 
-const DEFAULT_SIGNUP_CREDITS = 0;
+const DEFAULT_SIGNUP_CREDITS = 2;
 
 interface AuthContextType {
     user: User | null
