@@ -441,6 +441,7 @@ function AppContent() {
             { name: 'Remove BG',  icon: '✂️', desc: 'Remove backgrounds instantly',    status: 'Available Now',  isActive: true,  href: 'https://bgremover.deepvortexai.art',  isCurrent: false },
             { name: 'Upscaler',   icon: '🔍', desc: 'Upscale images up to 4x',         status: 'Available Now',  isActive: true,  href: 'https://upscaler.deepvortexai.art',   isCurrent: false },
             { name: '3D Generator', icon: '🧊', desc: 'Image to 3D model',             status: 'Available Now',  isActive: true,  href: '#',                                   isCurrent: true  },
+            { name: 'Voice Gen',    icon: '🎙️', desc: 'AI Voice Generator',            status: 'Available Now',  isActive: true,  href: 'https://voice.deepvortexai.art',       isCurrent: false },
           ].map((tool, idx) => (
             <div
               key={idx}
