@@ -1654,10 +1654,14 @@ body {
   
   .action-buttons {
     flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
-  
+
   .action-btn {
     width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
   }
   
   .result-title {
