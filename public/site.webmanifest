@@ -1,24 +1,21 @@
 {
-  "name": "Deep Vortex AI Image Upscaler",
-  "short_name": "Deep Vortex",
-  "description": "Upscale your images up to 4x with AI",
+  "name": "MyWebSite",
+  "short_name": "MySite",
   "icons": [
     {
-      "src": "/rings.png",
+      "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "maskable"
     },
     {
-      "src": "/rings.png",
+      "src": "/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "maskable"
     }
   ],
-  "theme_color": "#D4AF37",
-  "background_color": "#0a0a0a",
-  "display": "standalone",
-  "start_url": "/",
-  "scope": "/"
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
 }
