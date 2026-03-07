@@ -62,7 +62,7 @@ export default function Header() {
           <img src="/deepgoldremoveetiny.png" alt="Deep Vortex" className="brand-logo-image" />
         </div>
 
-        <h1 className="brand-title-text">DΞΞP VORTΞX AI</h1>
+        <h1 className="brand-title-text">AI 3D Generator</h1>
         <p className="primary-tagline">🧊 Generate 3D models from a single image with AI</p>
 
         <div className="hub-pills-container">
