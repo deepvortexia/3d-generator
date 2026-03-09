@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://upscaler.deepvortexai.art/sitemap.xml
+Sitemap: https://3d.deepvortexai.art/sitemap.xml
