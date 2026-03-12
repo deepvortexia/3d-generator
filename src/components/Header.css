@@ -32,66 +32,19 @@
 }
 
 .logo-display-zone {
-  position: relative;
-  width: 160px;
-  height: 160px;
+  height: 60px;
+  width: auto;
   margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .brand-logo-image {
-  width: 100%;
-  height: 100%;
+  height: 60px;
+  width: auto;
   object-fit: contain;
-  position: relative;
-  z-index: 3;
-  animation: logoGlowPulse 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 20px #D4AF37);
-}
-
-@keyframes logoGlowPulse {
-  0%, 100% { filter: drop-shadow(0 0 20px #D4AF37) brightness(1); }
-  50% { filter: drop-shadow(0 0 35px #E8C87C) brightness(1.2); }
-}
-
-.orbit-ring-one,
-.orbit-ring-two,
-.orbit-ring-three {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 2px solid #D4AF37;
-  border-radius: 50%;
-  opacity: 0.3;
-}
-
-.orbit-ring-one {
-  width: 180px;
-  height: 180px;
-  animation: orbitSpin 12s linear infinite;
-  border-top-color: transparent;
-  border-left-color: transparent;
-}
-
-.orbit-ring-two {
-  width: 210px;
-  height: 210px;
-  animation: orbitSpin 18s linear infinite reverse;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.orbit-ring-three {
-  width: 240px;
-  height: 240px;
-  animation: orbitSpin 24s linear infinite;
-  border-top-color: transparent;
-  border-bottom-color: transparent;
-}
-
-@keyframes orbitSpin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+  filter: drop-shadow(0 0 6px rgba(0,0,0,0.7)) drop-shadow(0 0 2px rgba(0,0,0,1));
 }
 
 .brand-title-text {
@@ -222,10 +175,7 @@
 @media (max-width: 768px) {
   .hub-header { padding: 3rem 1rem 1rem; }
   .back-to-hub-link { font-size: 0.75rem; padding: 0.25rem 0.65rem; }
-  .logo-display-zone { width: 120px; height: 120px; margin: 0 auto 2rem; }
-  .orbit-ring-one { width: 140px; height: 140px; }
-  .orbit-ring-two { width: 160px; height: 160px; }
-  .orbit-ring-three { width: 180px; height: 180px; }
+  .logo-display-zone { height: 60px; width: auto; margin: 0 auto 1rem; }
   .brand-title-text { font-size: 1.5rem; letter-spacing: 2px; margin: 1rem 0 0.4rem; }
   .primary-tagline { font-size: 1rem; }
   .hub-pills-container { gap: 0.75rem; }
@@ -238,10 +188,7 @@
 @media (max-width: 480px) {
   .hub-header { padding: 3rem 0.5rem 1rem; }
   .back-to-hub-link { font-size: 0.7rem; padding: 0.2rem 0.5rem; }
-  .logo-display-zone { width: 100px; height: 100px; margin: 0 auto 2rem; }
-  .orbit-ring-one { width: 120px; height: 120px; }
-  .orbit-ring-two { width: 140px; height: 140px; }
-  .orbit-ring-three { width: 160px; height: 160px; }
+  .logo-display-zone { height: 60px; width: auto; margin: 0 auto 1rem; }
   .brand-title-text { font-size: 1.2rem; letter-spacing: 1px; margin: 1rem 0 0.3rem; }
   .primary-tagline { font-size: 0.85rem; margin: 0.3rem 0 1.2rem; }
   .hub-pills-container { flex-direction: column; width: 100%; max-width: 300px; gap: 0.75rem; }
@@ -251,10 +198,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .brand-logo-image,
-  .orbit-ring-one,
-  .orbit-ring-two,
-  .orbit-ring-three { animation: none; }
+  .brand-logo-image { filter: drop-shadow(0 0 6px rgba(0,0,0,0.7)) drop-shadow(0 0 2px rgba(0,0,0,1)); }
   .back-to-hub-link:hover,
   .buy-credits-pill:hover,
   .favorites-pill:hover,

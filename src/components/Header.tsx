@@ -56,7 +56,7 @@ export default function Header() {
         )}
 
         <div className="logo-display-zone">
-          <img src="/real.png" alt="Deep Vortex" className="brand-logo-image" loading="eager" fetchPriority="high" style={{ width: '140px', height: '140px', filter: 'drop-shadow(0 0 18px rgba(255,215,100,0.45)) drop-shadow(0 0 36px rgba(255,215,100,0.2))' }} />
+          <img src="/reallitylogoreal.webp" alt="Deep Vortex" className="brand-logo-image" loading="eager" fetchPriority="high" />
         </div>
 
         <h1 className="brand-title-text">AI 3D Generator</h1>
