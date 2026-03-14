@@ -56,7 +56,7 @@ export default function Header() {
         )}
 
         <div className="logo-display-zone">
-          <img src="/reallitylogoreal.webp" alt="Deep Vortex" className="brand-logo-image" loading="eager" fetchPriority="high" />
+          <img src="/logotinyreal.webp" alt="Deep Vortex" className="brand-logo-image" loading="eager" fetchPriority="high" />
         </div>
 
         <h1 className="brand-title-text">AI 3D Generator</h1>
