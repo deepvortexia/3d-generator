@@ -3,6 +3,7 @@
 const tools = [
   { name: 'Emoticons',     icon: '😃', desc: 'Custom emoji creation',       href: 'https://emoticons.deepvortexai.art' },
   { name: 'Image Gen',     icon: '🎨', desc: 'AI artwork generator',         href: 'https://images.deepvortexai.art' },
+  { name: 'Avatar Gen',    icon: '🎭', desc: 'AI portrait styles',           href: 'https://avatar.deepvortexai.art' },
   { name: 'Remove BG',     icon: '✂️', desc: 'Remove backgrounds instantly', href: 'https://bgremover.deepvortexai.art' },
   { name: 'Upscaler',      icon: '🔍', desc: 'Upscale images up to 4x',      href: 'https://upscaler.deepvortexai.art' },
   { name: 'Voice Gen',     icon: '🎙️', desc: 'AI Voice Generator',           href: 'https://voice.deepvortexai.art' },
