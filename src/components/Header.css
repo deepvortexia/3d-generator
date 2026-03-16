@@ -125,6 +125,20 @@
   box-shadow: 0 4px 16px rgba(255, 215, 0, 0.4);
 }
 
+.how-to-use-pill {
+  border: 2px solid #D4AF37;
+  color: #D4AF37;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
+}
+.how-to-use-pill:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: #FFD700;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
+}
+
 .favorites-pill { border: 1px solid rgba(212, 175, 55, 0.3); color: #D4AF37; cursor: pointer; }
 .favorites-pill:hover {
   border-color: rgba(212, 175, 55, 0.6);
