@@ -437,15 +437,15 @@ function AppContent() {
         <h2 className="ecosystem-heading">Complete AI Ecosystem</h2>
         <div className="ecosystem-grid">
           {[
-            { name: 'Emoticons',  icon: '😃', desc: 'Custom emoji creation',          status: 'Available Now',  isActive: true,  href: 'https://emoticons.deepvortexai.art',  isCurrent: false },
-            { name: 'Image Gen',  icon: '🎨', desc: 'AI artwork',                      status: 'Available Now',  isActive: true,  href: 'https://images.deepvortexai.art',     isCurrent: false },
-            { name: 'Logo Gen',   icon: '🛡️', desc: 'AI logo creation',                status: 'Available Now',  isActive: true,  href: 'https://logo.deepvortexai.art',       isCurrent: false },
-            { name: 'Avatar Gen', icon: '🎭', desc: 'AI portrait styles',               status: 'Available Now',  isActive: true,  href: 'https://avatar.deepvortexai.art',     isCurrent: false },
-            { name: 'Remove BG',  icon: '✂️', desc: 'Remove backgrounds instantly',    status: 'Available Now',  isActive: true,  href: 'https://bgremover.deepvortexai.art',  isCurrent: false },
-            { name: 'Upscaler',   icon: '🔍', desc: 'Upscale images up to 4x',         status: 'Available Now',  isActive: true,  href: 'https://upscaler.deepvortexai.art',   isCurrent: false },
-            { name: '3D Generator', icon: '🧊', desc: 'Image to 3D model',             status: 'Available Now',  isActive: true,  href: '#',                                   isCurrent: true  },
-            { name: 'Voice Gen',    icon: '🎙️', desc: 'AI Voice Generator',            status: 'Available Now',  isActive: true,  href: 'https://voice.deepvortexai.art',       isCurrent: false },
-            { name: 'Image → Video', icon: '🎬', desc: 'Animate images with AI',       status: 'Available Now',  isActive: true,  href: 'https://video.deepvortexai.art',       isCurrent: false },
+            { name: 'Emoticons',     icon: '😃', desc: 'Custom emoji creation',         status: 'Available Now',  isActive: true,  href: 'https://emoticons.deepvortexai.art',  isCurrent: false },
+            { name: 'Image Gen',     icon: '🎨', desc: 'AI artwork',                    status: 'Available Now',  isActive: true,  href: 'https://images.deepvortexai.art',     isCurrent: false },
+            { name: 'Logo Gen',      icon: '🛡️', desc: 'AI logo creation',             status: 'Available Now',  isActive: true,  href: 'https://logo.deepvortexai.art',       isCurrent: false },
+            { name: 'Avatar Gen',    icon: '🎭', desc: 'AI portrait styles',            status: 'Available Now',  isActive: true,  href: 'https://avatar.deepvortexai.art',     isCurrent: false },
+            { name: 'Remove BG',     icon: '✂️', desc: 'Remove backgrounds instantly',  status: 'Available Now',  isActive: true,  href: 'https://bgremover.deepvortexai.art',  isCurrent: false },
+            { name: 'Upscaler',      icon: '🔍', desc: 'Upscale images up to 4x',       status: 'Available Now',  isActive: true,  href: 'https://upscaler.deepvortexai.art',   isCurrent: false },
+            { name: '3D Generator',  icon: '🧊', desc: 'Image to 3D model',             status: 'Available Now',  isActive: true,  href: 'https://3d.deepvortexai.art',         isCurrent: true  },
+            { name: 'Voice Gen',     icon: '🎙️', desc: 'AI Voice Generator',            status: 'Available Now',  isActive: true,  href: 'https://voice.deepvortexai.art',      isCurrent: false },
+            { name: 'Image → Video', icon: '🎬', desc: 'Animate images with AI',        status: 'Available Now',  isActive: true,  href: 'https://video.deepvortexai.art',      isCurrent: false },
           ].map((tool, idx) => (
             <div
               key={idx}
