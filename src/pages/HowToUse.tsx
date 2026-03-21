@@ -1,15 +1,15 @@
 // src/pages/HowToUse.tsx
 
 const tools = [
-  { name: 'Emoticons',     icon: '😃', desc: 'Custom emoji creation',       href: 'https://emoticons.deepvortexai.art' },
-  { name: 'Image Gen',     icon: '🎨', desc: 'AI artwork generator',         href: 'https://images.deepvortexai.art' },
-  { name: 'Avatar Gen',    icon: '🎭', desc: 'AI portrait styles',           href: 'https://avatar.deepvortexai.art' },
-  { name: 'Remove BG',     icon: '✂️', desc: 'Remove backgrounds instantly', href: 'https://bgremover.deepvortexai.art' },
-  { name: 'Upscaler',      icon: '🔍', desc: 'Upscale images up to 4x',      href: 'https://upscaler.deepvortexai.art' },
-  { name: 'Voice Gen',     icon: '🎙️', desc: 'AI Voice Generator',           href: 'https://voice.deepvortexai.art' },
-  { name: 'Image → Video', icon: '🎬', desc: 'Animate images with AI',       href: 'https://video.deepvortexai.art' },
-  { name: 'AI Chat',       icon: '💬', desc: 'Conversational AI assistant',  href: 'https://chat.deepvortexai.art' },
-  { name: 'Deep Vortex Hub', icon: '🌐', desc: 'All AI tools in one place',  href: 'https://deepvortexai.art' },
+  { name: 'Emoticons',     icon: '😃', desc: 'Custom emoji creation',       href: 'https://emoticons.deepvortexai.com' },
+  { name: 'Image Gen',     icon: '🎨', desc: 'AI artwork generator',         href: 'https://images.deepvortexai.com' },
+  { name: 'Avatar Gen',    icon: '🎭', desc: 'AI portrait styles',           href: 'https://avatar.deepvortexai.com' },
+  { name: 'Remove BG',     icon: '✂️', desc: 'Remove backgrounds instantly', href: 'https://bgremover.deepvortexai.com' },
+  { name: 'Upscaler',      icon: '🔍', desc: 'Upscale images up to 4x',      href: 'https://upscaler.deepvortexai.com' },
+  { name: 'Voice Gen',     icon: '🎙️', desc: 'AI Voice Generator',           href: 'https://voice.deepvortexai.com' },
+  { name: 'Image → Video', icon: '🎬', desc: 'Animate images with AI',       href: 'https://video.deepvortexai.com' },
+  { name: 'AI Chat',       icon: '💬', desc: 'Conversational AI assistant',  href: 'https://chat.deepvortexai.com' },
+  { name: 'Deep Vortex Hub', icon: '🌐', desc: 'All AI tools in one place',  href: 'https://deepvortexai.com' },
 ]
 
 const steps = [
@@ -85,7 +85,7 @@ export function HowToUse() {
 
       {/* Footer */}
       <footer style={styles.footer}>
-        <a href="https://deepvortexai.art" style={styles.footerLink}>
+        <a href="https://deepvortexai.com" style={styles.footerLink}>
           Deep Vortex AI — Building the complete AI creative ecosystem
         </a>
       </footer>

@@ -52,7 +52,7 @@ export default function Header() {
     <>
       <header className="hub-header" role="banner">
         {!isEmbedded && (
-          <a href="https://deepvortexai.art" className="back-to-hub-link">← Back to Hub</a>
+          <a href="https://deepvortexai.com" className="back-to-hub-link">← Back to Hub</a>
         )}
 
         <div className="logo-display-zone">

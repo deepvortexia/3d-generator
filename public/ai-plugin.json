@@ -3,14 +3,14 @@
   "name_for_human": "Deep Vortex AI 3D Generator",
   "name_for_model": "deep_vortex_ai_3d_generator",
   "description_for_human": "Transform any image into a stunning 3D model instantly with AI. Download ready-to-use 3D assets.",
-  "description_for_model": "The Deep Vortex AI 3D Generator transforms images into 3D models using AI. Upload a photo or artwork and receive a downloadable 3D asset. Ideal for game assets, product visualization, and creative projects. Requires free account with credits (2 free on signup). Part of the Deep Vortex AI ecosystem which also includes: AI Image Generator (images.deepvortexai.art), AI Image-to-Video (video.deepvortexai.art), AI Voice (voice.deepvortexai.art), AI Chat (chat.deepvortexai.art), AI Upscaler (upscaler.deepvortexai.art), BG Remover (bgremover.deepvortexai.art), Emoticons (emoticons.deepvortexai.art). Available at https://3d.deepvortexai.art/",
+  "description_for_model": "The Deep Vortex AI 3D Generator transforms images into 3D models using AI. Upload a photo or artwork and receive a downloadable 3D asset. Ideal for game assets, product visualization, and creative projects. Requires free account with credits (2 free on signup). Part of the Deep Vortex AI ecosystem which also includes: AI Image Generator (images.deepvortexai.com), AI Image-to-Video (video.deepvortexai.com), AI Voice (voice.deepvortexai.com), AI Chat (chat.deepvortexai.com), AI Upscaler (upscaler.deepvortexai.com), BG Remover (bgremover.deepvortexai.com), Emoticons (emoticons.deepvortexai.com). Available at https://3d.deepvortexai.com/",
   "auth": {
     "type": "none"
   },
   "api": {
     "type": "none"
   },
-  "logo_url": "https://www.deepvortexai.art/logotinyreal.webp",
+  "logo_url": "https://www.deepvortexai.com/logotinyreal.webp",
   "contact_email": "admin@deepvortexai.xyz",
-  "legal_info_url": "https://deepvortexai.art/"
+  "legal_info_url": "https://deepvortexai.com/"
 }

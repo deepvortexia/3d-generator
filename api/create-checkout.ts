@@ -56,8 +56,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       payment_method_types: ['card'],
       line_items: [{ price: validPack.priceId, quantity: 1 }],
       mode: 'payment',
-      success_url: `${req.headers.origin || 'https://3d.deepvortexai.art'}?success=true&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.origin || 'https://3d.deepvortexai.art'}`,
+      success_url: `${req.headers.origin || 'https://3d.deepvortexai.com'}?success=true&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin || 'https://3d.deepvortexai.com'}`,
       metadata: {
         packName,
         credits: validPack.credits.toString(),
