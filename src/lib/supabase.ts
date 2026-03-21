@@ -19,13 +19,13 @@ const getCookie = (name: string): string | null => {
 // Helper to set cookie
 const setCookieRaw = (name: string, value: string, maxAge: number = 31536000) => {
     if (typeof document === 'undefined') return
-    document.cookie = `${name}=${encodeURIComponent(value)}; domain=.deepvortexai.art; path=/; max-age=${maxAge}; secure; samesite=lax`
+    document.cookie = `${name}=${encodeURIComponent(value)}; domain=.deepvortexai.com; path=/; max-age=${maxAge}; secure; samesite=lax`
 }
 
 // Helper to remove cookie
 const removeCookieRaw = (name: string) => {
     if (typeof document === 'undefined') return
-    document.cookie = `${name}=; domain=.deepvortexai.art; path=/; max-age=0; secure; samesite=lax`
+    document.cookie = `${name}=; domain=.deepvortexai.com; path=/; max-age=0; secure; samesite=lax`
 }
 
 // Helper: get chunked cookie value
@@ -111,7 +111,7 @@ export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '', {
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: true,
-        flowType: 'pkce',
+        flowType: 'implicit',
         storageKey: 'deepvortex-auth',
         storage: customCookieStorage,
     },

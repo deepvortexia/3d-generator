@@ -5,7 +5,7 @@ const getReturnOrigin = (): string => {
     const match = document.cookie.match(/(^| )deepvortex-return-origin=([^;]+)/)
     const origin = match ? decodeURIComponent(match[2]) : null
     // Clear the cookie
-    document.cookie = 'deepvortex-return-origin=; domain=.deepvortexai.art; path=/; max-age=0'
+    document.cookie = 'deepvortex-return-origin=; domain=.deepvortexai.com; path=/; max-age=0'
     return origin || window.location.origin
 }
 
