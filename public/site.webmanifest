@@ -1,13 +1,7 @@
 {
-  "name": "AI 3D Generator - Deep Vortex AI",
-  "short_name": "3D Generator",
+  "name": "MyWebSite",
+  "short_name": "MySite",
   "icons": [
-    {
-      "src": "/logotinyreal.webp",
-      "sizes": "any",
-      "type": "image/webp",
-      "purpose": "any"
-    },
     {
       "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
@@ -21,7 +15,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#D4AF37",
-  "background_color": "#0a0a0a",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "display": "standalone"
 }
