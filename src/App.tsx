@@ -36,6 +36,11 @@ function AppContent() {
   const [favSaving, setFavSaving] = useState(false)
   const [favSaved, setFavSaved] = useState(false)
   const [downloading, setDownloading] = useState(false)
+  const [loadingStage, setLoadingStage] = useState(0)
+  const [loadingProgress, setLoadingProgress] = useState(0)
+  const [elapsedSeconds, setElapsedSeconds] = useState(0)
+  const progressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const elapsedIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const { user, session, loading } = useAuth()
   const { hasCredits, refreshProfile } = useCredits()
@@ -152,15 +157,43 @@ function AppContent() {
     if (!user) { setError('Please sign in to generate 3D models'); setIsAuthModalOpen(true); return }
     if (!hasCredits) { setError('You have run out of credits. Please purchase more to continue.'); setIsPricingModalOpen(true); return }
 
+    const clearIntervals = () => {
+      if (progressIntervalRef.current) { clearInterval(progressIntervalRef.current); progressIntervalRef.current = null }
+      if (elapsedIntervalRef.current) { clearInterval(elapsedIntervalRef.current); elapsedIntervalRef.current = null }
+    }
+
     setIsLoading(true)
+    setLoadingStage(1)
+    setLoadingProgress(0)
+    setElapsedSeconds(0)
     setError('')
     setToast(null)
+
+    elapsedIntervalRef.current = setInterval(() => setElapsedSeconds(s => s + 1), 1000)
 
     try {
       const { base64, mimeType: resolvedMimeType, wasResized } = await resizeImageIfNeeded(uploadedFile)
       if (wasResized) {
         setToast({ title: 'Image resized for processing', message: 'Your image was automatically resized to fit within processing limits.', type: 'warning' })
       }
+
+      // Animate stage 1 progress 0→10% over ~600ms
+      await new Promise<void>(resolve => {
+        let p = 0
+        const stage1Interval = setInterval(() => {
+          p += 2
+          setLoadingProgress(p)
+          if (p >= 10) {
+            clearInterval(stage1Interval)
+            resolve()
+          }
+        }, 60)
+      })
+
+      setLoadingStage(2)
+      progressIntervalRef.current = setInterval(() => {
+        setLoadingProgress(p => { const gap = 85 - p; return p + gap * 0.003 })
+      }, 100)
 
       const token = session?.access_token
       const controller = new AbortController()
@@ -176,6 +209,7 @@ function AppContent() {
         })
       } catch (fetchErr: any) {
         clearTimeout(timeout)
+        clearIntervals()
         if (fetchErr.name === 'AbortError') {
           setToast({ title: 'Request Timed Out', message: '3D generation took too long. Please try again. No credits were deducted.', type: 'warning' })
         } else {
@@ -186,6 +220,7 @@ function AppContent() {
       clearTimeout(timeout)
 
       if (!response.ok) {
+        clearIntervals()
         const data = await response.json().catch(() => ({}))
         switch (response.status) {
           case 401:
@@ -208,11 +243,31 @@ function AppContent() {
         return
       }
 
+      // Clear the asymptotic progress interval, move to stage 3
+      if (progressIntervalRef.current) { clearInterval(progressIntervalRef.current); progressIntervalRef.current = null }
+      setLoadingStage(3)
+
       const data = await response.json()
       if (data.video) setResultVideo(data.video)
       if (data.glb) setResultGlb(data.glb)
       await refreshProfile()
+
+      // Finalize progress to 100%
+      await new Promise<void>(resolve => {
+        progressIntervalRef.current = setInterval(() => {
+          setLoadingProgress(p => {
+            if (p >= 100) {
+              if (progressIntervalRef.current) { clearInterval(progressIntervalRef.current); progressIntervalRef.current = null }
+              resolve()
+              return 100
+            }
+            return p + 3
+          })
+        }, 40)
+      })
+      clearIntervals()
     } catch (err: any) {
+      clearIntervals()
       setToast({ title: 'Processing Failed', message: err.message || 'An unexpected error occurred.', type: 'error' })
     } finally {
       setIsLoading(false)
@@ -382,9 +437,32 @@ function AppContent() {
 
         {isLoading && (
           <div className="loading-section">
-            <div className="loading-spinner-large"></div>
-            <p className="loading-message">Generating 3D model... ✨</p>
-            <p className="loading-hint">This usually takes 30–90 seconds</p>
+            <div className="progress-stages">
+              <div className={`progress-stage${loadingStage===1?' stage-active':loadingStage>1?' stage-done':''}`}>
+                <div className="stage-dot"/>
+                <span>Uploading image...</span>
+              </div>
+              <div className={`progress-stage${loadingStage===2?' stage-active':loadingStage>2?' stage-done':''}`}>
+                <div className="stage-dot"/>
+                <span>AI is animating your image...</span>
+              </div>
+              <div className={`progress-stage${loadingStage===3?' stage-active':''}`}>
+                <div className="stage-dot"/>
+                <span>Finalizing video...</span>
+              </div>
+            </div>
+            <div className="progress-bar-wrapper">
+              <div className="progress-bar-track">
+                <div className="progress-bar-fill" style={{width:`${loadingProgress}%`}}/>
+              </div>
+              {loadingProgress>0&&(
+                <div className="progress-bar-tip" style={{left:`${loadingProgress}%`}}/>
+              )}
+            </div>
+            <div className="progress-footer">
+              <span className="progress-percent">{Math.round(loadingProgress)}%</span>
+              <span className="progress-elapsed">{elapsedSeconds}s...</span>
+            </div>
           </div>
         )}
 

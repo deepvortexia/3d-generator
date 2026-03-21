@@ -2123,3 +2123,23 @@ html, body {
 .secondary-download:hover {
   background: rgba(212, 175, 55, 0.2) !important;
 }
+
+/* ── Loading / Progress ── */
+.loading-section { padding: 2.25rem 2rem 2rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; margin-bottom: 1.5rem; }
+.progress-stages { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.75rem; }
+.progress-stage { display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted); font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: color 0.35s ease; }
+.progress-stage.stage-active { color: var(--gold-light); font-weight: 600; }
+.progress-stage.stage-done   { color: var(--success); }
+.stage-dot { flex-shrink: 0; width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.15); transition: all 0.35s ease; }
+.progress-stage.stage-active .stage-dot { background: var(--gold-primary); border-color: var(--gold-primary); box-shadow: 0 0 8px var(--glow-gold-strong); animation: pulseDot 1.4s ease-in-out infinite; }
+.progress-stage.stage-done .stage-dot { background: var(--success); border-color: var(--success); box-shadow: none; animation: none; }
+@keyframes pulseDot { 0%, 100% { box-shadow: 0 0 5px var(--glow-gold-strong); } 50% { box-shadow: 0 0 14px var(--glow-gold-strong), 0 0 28px var(--glow-gold); } }
+.progress-bar-wrapper { position: relative; margin-bottom: 0.75rem; }
+.progress-bar-track { width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 999px; overflow: hidden; border: 1px solid rgba(212,175,55,0.12); }
+.progress-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--gold-dark) 0%, var(--gold-primary) 60%, var(--gold-light) 100%); transition: width 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; }
+.progress-bar-fill::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%); background-size: 200% 100%; animation: shimmer 1.8s linear infinite; }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.progress-bar-tip { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; background: var(--gold-light); box-shadow: 0 0 10px var(--glow-gold-strong), 0 0 22px var(--glow-gold); transition: left 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94); pointer-events: none; }
+.progress-footer { display: flex; justify-content: space-between; align-items: center; }
+.progress-percent { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--gold-primary); letter-spacing: 1px; }
+.progress-elapsed { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--text-muted); }
