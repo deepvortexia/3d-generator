@@ -19,7 +19,7 @@ export const useCredits = () => {
       // This just triggers a refresh after the API call
       await refreshProfile()
       if (window.parent !== window) {
-        window.parent.postMessage({ type: 'deepvortex-credits-updated' }, 'https://deepvortexai.art')
+        window.parent.postMessage({ type: 'deepvortex-credits-updated' }, 'https://deepvortexai.com')
       }
       return true
     } catch (error) {
