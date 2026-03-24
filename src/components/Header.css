@@ -17,6 +17,8 @@
   color: #D4AF37;
   border-radius: 8px;
   padding: 0.4rem 1rem;
+  min-height: 44px;
+  min-width: 44px;
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
