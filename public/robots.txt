@@ -1,6 +1,10 @@
 User-agent: *
 Allow: /
 
+# Search engines
+User-agent: Googlebot
+Allow: /
+
 # AI crawlers — explicitly permitted
 User-agent: GPTBot
 Allow: /
